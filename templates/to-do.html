@@ -1,0 +1,81 @@
+
+<head>
+ <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+<script src="script.js"></script>
+<title>My App</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="content" id="content">
+            <h2>To-do tasks</h2>
+
+            {% if tasks | length < 1 %}
+                <h3>No tasks yet</h3>
+            {% else %}
+            {% for task in tasks %}
+            <form method="POST" action="{{ url_for('update', id=task.id) }}">
+                <label class="checkbox">
+                    <input type="checkbox" name="complete" value="true"
+                    {% if task.completed %} checked {% endif %}
+                    onchange="this.form.submit()">
+                    <span class="check"></span>
+                    <span class="task-text"> {{ task.content }} </span>
+                    <div class="icons">
+                        <a href="/update/{{ task.id }}"> <img src="{{ url_for('static', filename='icons/edit.svg') }}" class="icon" alt="Edit"> </a>
+                        <a href="/delete/{{ task.id }}"> <img src="{{ url_for('static', filename='icons/delete.svg') }}" class="icon" alt="Delete"> </a>
+                    </div>
+                </label>
+                <hr>
+            </form>
+
+            {% endfor %}
+            {% endif %}
+            
+            <form method="POST" action="/" class="add-form">
+                <input type="text" name="contentt" id="content1" placeholder="Add new task" required>
+                 <button type="submit" value="Add" id="add">
+                    <img src="{{ url_for('static', filename='icons/Union.svg') }}" class="icon" alt="Add">
+                    Add Task
+                </button>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll(".icons a[href^='/update']").forEach(editBtn => {
+                editBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    let form = editBtn.closest("form"); 
+                    let taskText = form.querySelector(".task-text");
+                    let oldValue = taskText.innerText.trim();
+
+                    let input = document.createElement("input");
+                    input.type = "text";
+                    input.name = "content";
+                    input.value = oldValue;
+                    input.classList.add("edit-input");
+
+                    taskText.parentNode.insertBefore(input, taskText);
+                    taskText.style.display = "none";
+                    input.focus();
+
+                    input.addEventListener("keydown", (ev) => {
+                        if (ev.key === "Enter") {
+                            ev.preventDefault();
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+
+    </script>
+
+</body>
