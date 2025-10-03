@@ -1,4 +1,5 @@
 # To-Do App
+<img width="1709" height="986" alt="Screenshot 2025-10-03 at 5 54 02 AM" src="https://github.com/user-attachments/assets/7963a109-96e9-4c5e-a296-a9c90d8338ce" />
 
 A To-Do web application built with **Flask**, **SQLite**, and **HTML/CSS/JS**.  
 It allows users to **add, edit, complete, and delete tasks**.
@@ -28,7 +29,7 @@ It allows users to **add, edit, complete, and delete tasks**.
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/To-Do.git
+git clone https://github.com/WajdAlmansor/To-Do.git
 cd To-Do
 ```
 
